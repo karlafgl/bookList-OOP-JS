@@ -10,6 +10,7 @@ function Book(title, author, isbn) {
 function UI() {}
 
 //Creating prototype
+//Add Book to List
 UI.prototype.addBookToList = function(book){
     const list = document.getElementById('book-list')
     //Create tr element
@@ -26,6 +27,13 @@ UI.prototype.addBookToList = function(book){
     list.appendChild(row)
 }
 
+//
+UI.prototype.clearFields = function() {
+    document.getElementById('title').value = ''
+    document.getElementById('author').value = ''
+    document.getElementById('isbn').value = ''
+}
+
 //Event Listeners
 document.getElementById('book-form').addEventListener('submit', function(e){
     //getting our values
@@ -39,7 +47,11 @@ document.getElementById('book-form').addEventListener('submit', function(e){
     //Instantiate UI
     const ui = new UI()
 
+    //Add book to the list
     ui.addBookToList(book)
+
+    //Clear fields
+    ui.clearFields()
 
     e.preventDefault()
 })
