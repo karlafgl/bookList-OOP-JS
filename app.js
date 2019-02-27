@@ -7,16 +7,39 @@ function Book(title, author, isbn) {
 
 
 //UI constructor 
-function UI() {
+function UI() {}
 
+//Creating prototype
+UI.prototype.addBookToList = function(book){
+    const list = document.getElementById('book-list')
+    //Create tr element
+    const row = document.createElement('tr')
+    //Insert cols
+    row.innerHTML = `
+    <td>${book.title}</td>
+    <td>${book.author}</td>
+    <td>${book.isbn}</td>
+    <td>
+        <a href='#' class='delete'>X</a>
+    </td>
+    `
+    list.appendChild(row)
 }
 
 //Event Listeners
 document.getElementById('book-form').addEventListener('submit', function(e){
-    //getting our variables
+    //getting our values
     const title = document.getElementById('title').value
     const author = document.getElementById('author').value
     const isbn = document.getElementById('isbn').value
+
+    //Instantiate book 
+    const book = new Book(title, author, isbn)
+    
+    //Instantiate UI
+    const ui = new UI()
+
+    ui.addBookToList(book)
 
     e.preventDefault()
 })
