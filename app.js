@@ -13,6 +13,10 @@ function UI() {
 
 //Event Listeners
 document.getElementById('book-form').addEventListener('submit', function(e){
-    console.log('test')
-    e.preventDefault
+    //getting our variables
+    const title = document.getElementById('title').value
+    const author = document.getElementById('author').value
+    const isbn = document.getElementById('isbn').value
+
+    e.preventDefault()
 })
