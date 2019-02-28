@@ -27,14 +27,42 @@ UI.prototype.addBookToList = function(book){
     list.appendChild(row)
 }
 
-//
+//Clear Fields
 UI.prototype.clearFields = function() {
     document.getElementById('title').value = ''
     document.getElementById('author').value = ''
     document.getElementById('isbn').value = ''
 }
 
-//Event Listeners
+//Show Alert Error
+UI.prototype.showAlert = function(message, className){
+    //Create div
+    const div = document.createElement('div')
+    //Add Class
+    div.className = `alert ${className}`
+    //Add Text
+    div.textContent = message
+    //Get parent
+    const container = document.querySelector('.container')
+    const form = document.querySelector('#book-form')
+    //Insert alert
+    container.insertBefore(div, form)
+
+    //Timeout after 3 second
+    setTimeout(()=> {
+        document.querySelector('.alert').remove()
+    }, 3000)
+
+    // Delete Book
+    UI.prototype.deleteBook = function(target) {
+        if(target.className === 'delete'){
+            target.parentElement.parentElement.remove()
+        }
+    }
+
+}
+
+//Event Listener for add book
 document.getElementById('book-form').addEventListener('submit', function(e){
     //getting our values
     const title = document.getElementById('title').value
@@ -47,11 +75,36 @@ document.getElementById('book-form').addEventListener('submit', function(e){
     //Instantiate UI
     const ui = new UI()
 
-    //Add book to the list
-    ui.addBookToList(book)
+    //Validate
+    if(title === '' || author === '' || isbn === ''){
+        //error alert
+        ui.showAlert('Please fill in all fields', 'error')
+    } else {
+        //Add book to the list
+        ui.addBookToList(book)
 
-    //Clear fields
-    ui.clearFields()
+        //Show Alert Sucess
+        ui.showAlert('Book Added', 'success')
+
+        //Clear fields
+        ui.clearFields()
+    }
+
+    e.preventDefault()
+})
+
+//Event Listener for delete
+document.getElementById('book-list').addEventListener('click', function(e){
+    
+    //Instantiate UI
+    const ui = new UI()
+
+    //delete book
+    ui.deleteBook(e.target)
+
+    //Show message
+    ui.showAlert('Book removed!', 'success')
+
 
     e.preventDefault()
 })
